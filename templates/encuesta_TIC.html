@@ -117,6 +117,14 @@
 </div>
 
 <script>
+// Modos de envío:
+// "vercel" = función serverless (Vercel)
+// "local"  = guarda en localStorage (demo sin backend)
+const SUBMIT_MODE = "vercel";
+
+// Endpoint para Vercel. Si vuelves a Flask, cambia a "/guardar_respuesta".
+const API_ENDPOINT = "/api/guardar_respuesta";
+
 const ALL_Q = [
   { num:1,  sid:'s1', text:'Las TIC fomentan la implicación en los procesos de enseñanza y aprendizaje' },
   { num:2,  sid:'s1', text:'Los profesores deben utilizar las TIC para mejorar la calidad de los procesos de aprendizaje' },
