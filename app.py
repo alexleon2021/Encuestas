@@ -11,14 +11,15 @@ def formulario():
 # Ruta para manejar las respuestas del formulario
 @app.route("/guardar_respuesta", methods=["POST"])
 def guardar_respuesta():
-    nombre = request.form.get("nombre")
-    respuesta = request.form.get("respuesta")
-
-    if not nombre or not respuesta:
+    data = request.get_json()  # Obtener datos en formato JSON
+    if not data or "answers" not in data:
         return jsonify({"error": "Faltan datos"}), 400
 
-    insertar_respuesta(nombre, respuesta)
-    return jsonify({"mensaje": "Respuesta guardada correctamente"})
+    # Guardar cada respuesta en la base de datos
+    for pregunta, respuesta in data["answers"].items():
+        insertar_respuesta(pregunta, respuesta)
+
+    return jsonify({"mensaje": "Respuestas guardadas correctamente"})
 
 # Ruta para ver todas las respuestas (opcional)
 @app.route("/respuestas")
