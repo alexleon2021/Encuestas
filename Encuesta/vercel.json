@@ -1,0 +1,6 @@
+{
+  "rewrites": [
+    { "source": "/", "destination": "/encuesta_TIC.html" },
+    { "source": "/admin", "destination": "/admin_resultados.html" }
+  ]
+}
