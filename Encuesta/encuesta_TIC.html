@@ -200,15 +200,31 @@ function submitSurvey() {
 
   document.getElementById('alertBox').style.display = 'none';
 
-  // Save to localStorage
-  const existing = JSON.parse(localStorage.getItem('tic_responses') || '[]');
-  const entry = { timestamp: new Date().toISOString(), answers };
-  existing.push(entry);
-  localStorage.setItem('tic_responses', JSON.stringify(existing));
-
-  document.getElementById('successPanel').style.display = 'block';
-  document.querySelector('.btn-submit').style.display = 'none';
-  document.getElementById('successPanel').scrollIntoView({ behavior: 'smooth' });
+  // Enviar respuestas al servidor
+  fetch('/guardar_respuesta', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ answers })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error al guardar las respuestas');
+    }
+    return response.json();
+  })
+  .then(data => {
+    document.getElementById('successPanel').style.display = 'block';
+    document.querySelector('.btn-submit').style.display = 'none';
+    document.getElementById('successPanel').scrollIntoView({ behavior: 'smooth' });
+  })
+  .catch(error => {
+    const box = document.getElementById('alertBox');
+    box.style.display = 'block';
+    box.textContent = 'Hubo un error al enviar las respuestas. Por favor, inténtalo de nuevo.';
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
 }
 
 function resetForm() {
