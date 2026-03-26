@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluación de Actitudes ante las TIC</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Arial, sans-serif; background: #f0f4fa; color: #1a1a1a; min-height: 100vh; }
+  .header { background: #2d5da6; color: white; padding: 1.5rem 2rem; position: relative; text-align: center; }
+  .header h1 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .header p { font-size: 0.9rem; opacity: 0.85; }
+  .btn-admin { position: absolute; top: 1.2rem; right: 1.2rem; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3); color: white; border-radius: 8px; padding: 6px 14px; font-size: 0.78rem; font-weight: 600; cursor: pointer; text-decoration: none; display: flex; align-items: center; gap: 6px; transition: background 0.2s; }
+  .btn-admin:hover { background: rgba(255,255,255,0.22); }
+  .progress-bar-wrap { background: #1a3d7a; height: 6px; }
+  .progress-bar { height: 6px; background: #6eb5ff; width: 0%; transition: width 0.4s; }
+  .progress-info { background: #e8f0fb; padding: 0.5rem 2rem; text-align: right; font-size: 0.82rem; color: #2d5da6; font-weight: 600; }
+  .container { max-width: 840px; margin: 1.5rem auto; padding: 0 1rem 5rem; }
+  .section-card { background: white; border-radius: 12px; border: 1px solid #dde4f0; margin-bottom: 2rem; overflow: hidden; }
+  .section-header { background: #eef3fb; border-bottom: 1px solid #dde4f0; padding: 1rem 1.5rem; }
+  .section-header h2 { font-size: 0.98rem; font-weight: 700; color: #2d5da6; }
+  .section-header p { font-size: 0.82rem; color: #555; margin-top: 0.2rem; }
+  .scale-legend { display: flex; border-bottom: 1px solid #eee; }
+  .scale-legend .si { flex: 1; text-align: center; padding: 0.45rem 0.2rem; font-size: 0.68rem; color: #666; border-right: 1px solid #eee; line-height: 1.3; }
+  .scale-legend .si:last-child { border-right: none; }
+  .scale-legend .si .num { display: block; font-size: 0.95rem; font-weight: 700; color: #2d5da6; }
+  .question-row { display: grid; grid-template-columns: 36px 1fr repeat(5, 44px); align-items: center; border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
+  .question-row:last-child { border-bottom: none; }
+  .question-row:hover { background: #fafbff; }
+  .question-row.answered { background: #f4f9ff; }
+  .question-row.err { background: #fff5f5; }
+  .q-num { text-align: center; font-size: 0.78rem; font-weight: 700; color: #2d5da6; padding: 0.8rem 0.25rem; }
+  .q-text { padding: 0.85rem 0.75rem; font-size: 0.85rem; line-height: 1.5; color: #222; }
+  .q-radio { display: flex; align-items: center; justify-content: center; }
+  .q-radio input[type=radio] { width: 17px; height: 17px; cursor: pointer; accent-color: #2d5da6; }
+  .alert { background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; padding: 0.9rem 1.2rem; margin-bottom: 1.2rem; font-size: 0.88rem; color: #7a5000; display: none; }
+  .btn-submit { display: block; width: 100%; padding: 1rem; background: #2d5da6; color: white; border: none; border-radius: 8px; font-size: 1rem; font-weight: 700; cursor: pointer; margin-top: 1.2rem; transition: background 0.2s; }
+  .btn-submit:hover { background: #1e4480; }
+  .success-panel { background: white; border-radius: 12px; border: 2px solid #28a745; padding: 2.5rem; text-align: center; display: none; margin-top: 1.5rem; }
+  .success-panel h2 { color: #28a745; font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .success-panel p { color: #444; font-size: 0.95rem; }
+  .btn-new { background: #f0f4fa; border: 1.5px solid #2d5da6; color: #2d5da6; border-radius: 8px; padding: 0.7rem 1.5rem; font-size: 0.9rem; font-weight: 600; cursor: pointer; margin-top: 1.2rem; }
+  .btn-new:hover { background: #e0eaff; }
+  @media (max-width: 580px) {
+    .question-row { grid-template-columns: 28px 1fr repeat(5, 36px); }
+    .q-text { font-size: 0.78rem; padding: 0.7rem 0.4rem; }
+  }
+</style>
+</head>
+<body>
+<div class="header">
+  <a class="btn-admin" href="admin_resultados.html">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
+    Panel Admin
+  </a>
+  <h1>Evaluación de Actitudes ante el Uso de las TIC</h1>
+  <p>Valore cada afirmación del 1 al 5 según su nivel de acuerdo o conocimiento</p>
+</div>
+<div class="progress-bar-wrap"><div class="progress-bar" id="pb"></div></div>
+<div class="progress-info" id="pi">0 / 31 preguntas respondidas</div>
+
+<div class="container">
+  <div class="alert" id="alertBox"></div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <h2>Actitudes ante el uso de las TIC</h2>
+      <p>Preguntas 1 – 7 &nbsp;|&nbsp; 1 = Totalmente en desacuerdo &nbsp; 5 = Totalmente de acuerdo</p>
+    </div>
+    <div class="scale-legend">
+      <div class="si"><span class="num">1</span>Totalmente en desacuerdo</div>
+      <div class="si"><span class="num">2</span>En desacuerdo</div>
+      <div class="si"><span class="num">3</span>Ni acuerdo ni desacuerdo</div>
+      <div class="si"><span class="num">4</span>De acuerdo</div>
+      <div class="si"><span class="num">5</span>Totalmente de acuerdo</div>
+    </div>
+    <div id="s1"></div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <h2>Nivel de conocimiento de tecnologías</h2>
+      <p>Preguntas 8 – 19 &nbsp;|&nbsp; 1 = Ninguno &nbsp; 5 = Experto</p>
+    </div>
+    <div class="scale-legend">
+      <div class="si"><span class="num">1</span>Ninguno</div>
+      <div class="si"><span class="num">2</span>Básico</div>
+      <div class="si"><span class="num">3</span>Intermedio</div>
+      <div class="si"><span class="num">4</span>Avanzado</div>
+      <div class="si"><span class="num">5</span>Experto</div>
+    </div>
+    <div id="s2"></div>
+  </div>
+
+  <div class="section-card">
+    <div class="section-header">
+      <h2>Uso de TIC</h2>
+      <p>Preguntas 20 – 31 &nbsp;|&nbsp; 1 = Nunca &nbsp; 5 = Siempre</p>
+    </div>
+    <div class="scale-legend">
+      <div class="si"><span class="num">1</span>Nunca</div>
+      <div class="si"><span class="num">2</span>Casi nunca</div>
+      <div class="si"><span class="num">3</span>A veces</div>
+      <div class="si"><span class="num">4</span>Frecuentemente</div>
+      <div class="si"><span class="num">5</span>Siempre</div>
+    </div>
+    <div id="s3"></div>
+  </div>
+
+  <button class="btn-submit" onclick="submitSurvey()">Enviar respuestas</button>
+
+  <div class="success-panel" id="successPanel">
+    <h2>¡Gracias por tu participación!</h2>
+    <p>Tus respuestas han sido registradas correctamente.</p>
+    <button class="btn-new" onclick="resetForm()">Responder de nuevo</button>
+  </div>
+</div>
+
+<script>
+// Modos de envío:
+// "vercel" = función serverless (Vercel)
+// "local"  = guarda en localStorage (demo sin backend)
+const SUBMIT_MODE = "vercel";
+
+// Endpoint para Vercel. Si vuelves a Flask, cambia a "/guardar_respuesta".
+const API_ENDPOINT = "/api/guardar_respuesta";
+
+const ALL_Q = [
+  { num:1,  sid:'s1', text:'Las TIC fomentan la implicación en los procesos de enseñanza y aprendizaje' },
+  { num:2,  sid:'s1', text:'Los profesores deben utilizar las TIC para mejorar la calidad de los procesos de aprendizaje' },
+  { num:3,  sid:'s1', text:'Es imprescindible incorporar las TIC en las aulas universitarias' },
+  { num:4,  sid:'s1', text:'Las clases mejoran a medida que se van incorporando las TIC' },
+  { num:5,  sid:'s1', text:'Las TIC facilitan el desarrollo de las clases' },
+  { num:6,  sid:'s1', text:'Las TIC permiten la consecución de las competencias' },
+  { num:7,  sid:'s1', text:'Las TIC proporcionan flexibilidad de espacio y tiempo para la comunicación entre los miembros de la comunidad educativa' },
+  { num:8,  sid:'s2', text:'Herramientas ofimáticas (Microsoft 365, Google Workspace, LibreOffice, Canva, etc.)' },
+  { num:9,  sid:'s2', text:'Buscadores y motores de búsqueda (Google, Bing, Google Scholar, Perplexity, etc.)' },
+  { num:10, sid:'s2', text:'Sistemas de comunicación digital (correo electrónico, Microsoft Teams, Zoom, Google Meet, WhatsApp, Discord, etc.)' },
+  { num:11, sid:'s2', text:'Bibliotecas y bases de datos digitales (Scopus, Web of Science, PubMed, Google Scholar, Redalyc, etc.)' },
+  { num:12, sid:'s2', text:'Plataformas de contenido digital (YouTube, Spotify, Medium, SlideShare, Genially, etc.)' },
+  { num:13, sid:'s2', text:'Redes sociales (Instagram, TikTok, LinkedIn, X/Twitter, Facebook, Threads, etc.)' },
+  { num:14, sid:'s2', text:'Programas de edición multimedia (Canva, CapCut, DaVinci Resolve, Adobe Creative Suite, Audacity, etc.)' },
+  { num:15, sid:'s2', text:'Plataformas virtuales de enseñanza-aprendizaje (Moodle, Canvas, Google Classroom, Blackboard, Microsoft Teams Education, etc.)' },
+  { num:16, sid:'s2', text:'Programas para análisis de datos (SPSS, R, Python, ATLAS.ti, NVivo, Power BI, Excel avanzado, etc.)' },
+  { num:17, sid:'s2', text:'Recursos educativos en red (MOOCs, repositorios OER, Khan Academy, Coursera, edX, podcasts educativos, etc.)' },
+  { num:18, sid:'s2', text:'Creación de materiales virtuales (H5P, Genially, Padlet, Nearpod, portfolios digitales, wikis colaborativas, etc.)' },
+  { num:19, sid:'s2', text:'Herramientas de autor y gamificación educativa (Kahoot, Quizizz, Edpuzzle, Articulate, iSpring, etc.)' },
+  { num:20, sid:'s3', text:'Herramientas ofimáticas (Microsoft 365, Google Workspace, LibreOffice, Canva, etc.)' },
+  { num:21, sid:'s3', text:'Buscadores y motores de búsqueda (Google, Bing, Google Scholar, Perplexity, etc.)' },
+  { num:22, sid:'s3', text:'Sistemas de comunicación digital (correo electrónico, Microsoft Teams, Zoom, Google Meet, WhatsApp, Discord, etc.)' },
+  { num:23, sid:'s3', text:'Bibliotecas y bases de datos digitales (Scopus, Web of Science, PubMed, Google Scholar, Redalyc, etc.)' },
+  { num:24, sid:'s3', text:'Plataformas de contenido digital (YouTube, Spotify, Medium, SlideShare, Genially, etc.)' },
+  { num:25, sid:'s3', text:'Redes sociales (Instagram, TikTok, LinkedIn, X/Twitter, Facebook, Threads, etc.)' },
+  { num:26, sid:'s3', text:'Programas de edición multimedia (Canva, CapCut, DaVinci Resolve, Adobe Creative Suite, Audacity, etc.)' },
+  { num:27, sid:'s3', text:'Plataformas virtuales de enseñanza-aprendizaje (Moodle, Canvas, Google Classroom, Blackboard, Microsoft Teams Education, etc.)' },
+  { num:28, sid:'s3', text:'Programas para análisis de datos (SPSS, R, Python, ATLAS.ti, NVivo, Power BI, Excel avanzado, etc.)' },
+  { num:29, sid:'s3', text:'Recursos educativos en red (MOOCs, repositorios OER, Khan Academy, Coursera, edX, podcasts educativos, etc.)' },
+  { num:30, sid:'s3', text:'Creación de materiales virtuales (H5P, Genially, Padlet, Nearpod, portfolios digitales, wikis colaborativas, etc.)' },
+  { num:31, sid:'s3', text:'Herramientas de autor y gamificación educativa (Kahoot, Quizizz, Edpuzzle, Articulate, iSpring, etc.)' },
+];
+
+function buildQuestions() {
+  ALL_Q.forEach(q => {
+    const row = document.createElement('div');
+    row.className = 'question-row';
+    row.id = 'row_' + q.num;
+    let radios = '';
+    for (let v = 1; v <= 5; v++) {
+      radios += `<div class="q-radio"><input type="radio" name="q${q.num}" value="${v}" onchange="updateProgress()"></div>`;
+    }
+    row.innerHTML = `<div class="q-num">${q.num}</div><div class="q-text">${q.text}</div>${radios}`;
+    document.getElementById(q.sid).appendChild(row);
+  });
+}
+
+function updateProgress() {
+  let count = 0;
+  ALL_Q.forEach(q => {
+    const sel = document.querySelector(`input[name="q${q.num}"]:checked`);
+    if (sel) { count++; document.getElementById('row_' + q.num).classList.add('answered'); }
+  });
+  const pct = Math.round((count / 31) * 100);
+  document.getElementById('pb').style.width = pct + '%';
+  document.getElementById('pi').textContent = count + ' / 31 preguntas respondidas';
+}
+
+function submitSurvey() {
+  const answers = {};
+  const missing = [];
+  ALL_Q.forEach(q => {
+    const sel = document.querySelector(`input[name="q${q.num}"]:checked`);
+    if (sel) answers[q.num] = parseInt(sel.value);
+    else missing.push(q.num);
+  });
+
+  if (missing.length > 0) {
+    const box = document.getElementById('alertBox');
+    box.style.display = 'block';
+    box.textContent = 'Faltan las preguntas: ' + missing.join(', ') + '. Por favor respóndalas antes de enviar.';
+    missing.forEach(n => {
+      const row = document.getElementById('row_' + n);
+      row.classList.add('err');
+      setTimeout(() => row.classList.remove('err'), 2500);
+    });
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    return;
+  }
+
+  document.getElementById('alertBox').style.display = 'none';
+
+  // Enviar respuestas al servidor
+  fetch('/guardar_respuesta', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ answers })
+  })
+  .then(response => {
+    if (!response.ok) {
+      throw new Error('Error al guardar las respuestas');
+    }
+    return response.json();
+  })
+  .then(data => {
+    document.getElementById('successPanel').style.display = 'block';
+    document.querySelector('.btn-submit').style.display = 'none';
+    document.getElementById('successPanel').scrollIntoView({ behavior: 'smooth' });
+  })
+  .catch(error => {
+    const box = document.getElementById('alertBox');
+    box.style.display = 'block';
+    box.textContent = 'Hubo un error al enviar las respuestas. Por favor, inténtalo de nuevo.';
+    box.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+}
+
+function resetForm() {
+  document.querySelectorAll('input[type=radio]').forEach(r => r.checked = false);
+  document.querySelectorAll('.question-row').forEach(r => r.classList.remove('answered', 'err'));
+  document.getElementById('successPanel').style.display = 'none';
+  document.querySelector('.btn-submit').style.display = 'block';
+  document.getElementById('alertBox').style.display = 'none';
+  updateProgress();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildQuestions();
+updateProgress();
+</script>
+</body>
+</html>
