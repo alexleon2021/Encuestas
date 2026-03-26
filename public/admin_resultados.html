@@ -234,8 +234,14 @@ function clearData() {
   }
 }
 
-function renderDashboard() {
-  const raw = JSON.parse(localStorage.getItem('tic_responses') || '[]');
+async function renderDashboard() {
+  let raw = [];
+  try {
+    const resp = await fetch('/api/respuestas');
+    raw = await resp.json();
+  } catch (e) {
+    raw = [];
+  }
   const n = raw.length;
 
   document.getElementById('badgeResp').textContent = n + (n === 1 ? ' respuesta' : ' respuestas');
@@ -249,7 +255,7 @@ function renderDashboard() {
   document.getElementById('emptyState').style.display = 'none';
   document.getElementById('mainContent').style.display = 'block';
 
-  const last = new Date(raw[raw.length - 1].timestamp);
+  const last = new Date(raw[raw.length - 1].created_at);
   document.getElementById('statLast').textContent = last.toLocaleDateString('es-ES', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' });
 
   let grandSum = 0, grandCount = 0;

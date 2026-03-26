@@ -209,7 +209,7 @@ function submitSurvey() {
   document.getElementById('alertBox').style.display = 'none';
 
   // Enviar respuestas al servidor
-  fetch('/guardar_respuesta', {
+  fetch(API_ENDPOINT, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'

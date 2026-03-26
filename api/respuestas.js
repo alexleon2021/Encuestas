@@ -38,23 +38,23 @@ async function ensureTable() {
 }
 
 export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    res.setHeader("Allow", ["POST"]);
-    return res.status(405).json({ error: "Method not allowed" });
-  }
-
   try {
-    const body = req.body || {};
-    if (!body.answers || typeof body.answers !== "object") {
-      return res.status(400).json({ error: "Faltan datos" });
+    await ensureTable();
+
+    if (req.method === "GET") {
+      const result = await getPool().query(
+        "SELECT id, created_at, answers FROM survey_responses ORDER BY id ASC"
+      );
+      return res.status(200).json(result.rows);
     }
 
-    await ensureTable();
-    await getPool().query("INSERT INTO survey_responses (answers) VALUES ($1)", [
-      body.answers,
-    ]);
+    if (req.method === "DELETE") {
+      await getPool().query("TRUNCATE TABLE survey_responses");
+      return res.status(200).json({ mensaje: "Datos borrados" });
+    }
 
-    return res.status(200).json({ mensaje: "Respuestas guardadas" });
+    res.setHeader("Allow", ["GET", "DELETE"]);
+    return res.status(405).json({ error: "Method not allowed" });
   } catch (err) {
     return res.status(500).json({ error: err.message || "Error interno" });
   }
