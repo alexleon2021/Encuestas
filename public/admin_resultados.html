@@ -67,11 +67,9 @@
 
   .q-dist { display: grid; grid-template-columns: 28px 1fr; gap: 10px; margin: 6px 0 14px; align-items: center; }
   .q-dist-label { font-size: 0.7rem; color: #4a6080; text-align: right; }
-  .q-dist-track { display: flex; height: 12px; background: #0f1923; border-radius: 6px; overflow: hidden; border: 1px solid #1f2a3a; }
+  .q-dist-track { display: flex; height: 10px; background: #0f1923; border-radius: 6px; overflow: hidden; border: 1px solid #1f2a3a; }
   .q-dist-seg { height: 100%; }
-  .q-dist-legend { display: flex; gap: 8px; font-size: 0.65rem; color: #6f8299; margin-top: 4px; }
-  .q-dist-legend span { display: inline-flex; align-items: center; gap: 4px; }
-  .q-dist-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+  .q-dist-nums { display: flex; justify-content: space-between; font-size: 0.62rem; color: #4a6080; margin-top: 3px; }
 
   .dist-section { padding: 1rem 1.5rem; border-top: 1px solid #2a3a52; }
   .dist-title { font-size: 0.78rem; color: #7a90a8; margin-bottom: 8px; }
@@ -318,13 +316,7 @@ async function renderDashboard() {
         <div class="q-dist-label">1-5</div>
         <div>
           <div class="q-dist-track">${segs}</div>
-          <div class="q-dist-legend">
-            <span><i class="q-dist-dot" style="background:${COLORS[0]}"></i>1</span>
-            <span><i class="q-dist-dot" style="background:${COLORS[1]}"></i>2</span>
-            <span><i class="q-dist-dot" style="background:${COLORS[2]}"></i>3</span>
-            <span><i class="q-dist-dot" style="background:${COLORS[3]}"></i>4</span>
-            <span><i class="q-dist-dot" style="background:${COLORS[4]}"></i>5</span>
-          </div>
+          <div class="q-dist-nums"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
         </div>`;
       chartEl.appendChild(dist);
     });
