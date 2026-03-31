@@ -33,9 +33,9 @@
 
   /* DASHBOARD */
   #dashboard { display: none; }
-  .topbar { background: #1a2638; border-bottom: 1px solid #2a3a52; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; }
+  .topbar { background: #1a2638; border-bottom: 1px solid #2a3a52; padding: 1rem 2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
   .topbar h1 { color: #6eb5ff; font-size: 1.1rem; font-weight: 700; }
-  .topbar-right { display: flex; align-items: center; gap: 12px; }
+  .topbar-right { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
   .badge-resp { background: #1d4080; color: #6eb5ff; font-size: 0.78rem; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
   .btn-back { background: transparent; border: 1px solid #2a3a52; color: #6eb5ff; border-radius: 6px; padding: 5px 12px; font-size: 0.78rem; cursor: pointer; text-decoration: none; }
   .btn-back:hover { background: #1d4080; }
@@ -44,40 +44,46 @@
   .btn-clear { background: transparent; border: 1px solid #7a2020; color: #ff6b6b; border-radius: 6px; padding: 5px 12px; font-size: 0.78rem; cursor: pointer; }
   .btn-clear:hover { background: #3a1010; }
 
-  .content { max-width: 1000px; margin: 1.5rem auto; padding: 0 1rem 4rem; }
+  .content { max-width: 1100px; margin: 1.5rem auto; padding: 0 1rem 4rem; }
 
   .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 2rem; }
   .stat-card { background: #1a2638; border: 1px solid #2a3a52; border-radius: 10px; padding: 1.2rem; text-align: center; }
   .stat-card .label { font-size: 0.75rem; color: #7a90a8; margin-bottom: 6px; }
   .stat-card .value { font-size: 1.8rem; font-weight: 700; color: #6eb5ff; }
 
-  .section-block { background: #1a2638; border: 1px solid #2a3a52; border-radius: 12px; margin-bottom: 2rem; overflow: hidden; }
+  /* SECCIÓN BLOQUE */
+  .section-block { background: #1a2638; border: 1px solid #2a3a52; border-radius: 12px; margin-bottom: 2.5rem; overflow: hidden; }
   .section-title { padding: 1rem 1.5rem; border-bottom: 1px solid #2a3a52; display: flex; align-items: center; gap: 10px; }
   .section-title h2 { font-size: 0.95rem; font-weight: 700; color: #6eb5ff; }
   .section-title .avg-badge { background: #1d4080; color: #6eb5ff; font-size: 0.75rem; padding: 3px 10px; border-radius: 12px; font-weight: 700; }
 
-  .chart-wrap { padding: 1.2rem 1.5rem; }
-  .bar-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
-  .bar-label { font-size: 0.75rem; color: #7a90a8; width: 28px; text-align: right; flex-shrink: 0; }
-  .bar-text { font-size: 0.72rem; color: #9fb0c4; flex: 0 0 220px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-  .bar-track { flex: 1; background: #0f1923; border-radius: 4px; height: 22px; overflow: hidden; }
-  .bar-fill { height: 22px; border-radius: 4px; transition: width 0.8s ease; display: flex; align-items: center; padding-left: 8px; }
-  .bar-fill span { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.9); white-space: nowrap; }
-  .bar-score { font-size: 0.78rem; font-weight: 700; width: 36px; text-align: right; color: #c8d8e8; }
+  /* GRID DE PREGUNTAS */
+  .questions-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 1px; background: #2a3a52; }
+  .question-card { background: #1a2638; padding: 1.2rem; }
+  .question-card:hover { background: #1f2e42; }
 
-  .q-dist { display: grid; grid-template-columns: 28px 1fr; gap: 10px; margin: 6px 0 14px; align-items: center; }
-  .q-dist-label { font-size: 0.7rem; color: #4a6080; text-align: right; }
-  .q-dist-track { display: flex; height: 10px; background: #0f1923; border-radius: 6px; overflow: hidden; border: 1px solid #1f2a3a; }
-  .q-dist-seg { height: 100%; }
-  .q-dist-nums { display: flex; justify-content: space-between; font-size: 0.62rem; color: #4a6080; margin-top: 3px; }
+  .q-header { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
+  .q-num { background: #1d4080; color: #6eb5ff; font-size: 0.72rem; font-weight: 700; padding: 3px 8px; border-radius: 6px; flex-shrink: 0; }
+  .q-title { font-size: 0.8rem; color: #c8d8e8; line-height: 1.35; }
+  .q-avg { font-size: 1.4rem; font-weight: 700; margin: 6px 0 10px; }
 
-  .dist-section { padding: 1rem 1.5rem; border-top: 1px solid #2a3a52; }
-  .dist-title { font-size: 0.78rem; color: #7a90a8; margin-bottom: 8px; }
-  .dist-bars { display: flex; gap: 6px; align-items: flex-end; height: 60px; }
-  .dist-col { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px; }
-  .dist-bar { width: 100%; border-radius: 3px 3px 0 0; transition: height 0.6s ease; min-height: 2px; }
-  .dist-val { font-size: 0.65rem; color: #7a90a8; }
-  .dist-lbl { font-size: 0.65rem; color: #4a6080; }
+  /* Barras horizontales por valor (1-5) */
+  .score-bars { display: flex; flex-direction: column; gap: 4px; }
+  .score-row { display: flex; align-items: center; gap: 6px; }
+  .score-lbl { font-size: 0.68rem; color: #7a90a8; width: 14px; text-align: right; flex-shrink: 0; }
+  .score-track { flex: 1; background: #0f1923; border-radius: 3px; height: 14px; overflow: hidden; }
+  .score-fill { height: 14px; border-radius: 3px; transition: width 0.7s ease; }
+  .score-count { font-size: 0.65rem; color: #7a90a8; width: 20px; text-align: right; flex-shrink: 0; }
+
+  /* Leyenda de colores */
+  .score-legend { display: flex; gap: 8px; margin-top: 8px; flex-wrap: wrap; }
+  .legend-item { display: flex; align-items: center; gap: 4px; font-size: 0.62rem; color: #7a90a8; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
+
+  .section-summary { padding: 0.9rem 1.5rem; border-top: 1px solid #2a3a52; background: #152030; display: flex; gap: 20px; flex-wrap: wrap; }
+  .sum-item { font-size: 0.75rem; }
+  .sum-label { color: #7a90a8; }
+  .sum-val { color: #c8d8e8; font-weight: 700; margin-left: 4px; }
 
   .empty-state { text-align: center; padding: 4rem 2rem; color: #4a6080; }
   .empty-state p { font-size: 1rem; margin-bottom: 0.5rem; }
@@ -87,7 +93,7 @@
 
   @media (max-width: 580px) {
     .stats-grid { grid-template-columns: 1fr 1fr; }
-    .bar-text { flex: 0 0 120px; }
+    .questions-grid { grid-template-columns: 1fr; }
   }
 </style>
 </head>
@@ -136,11 +142,8 @@
           <h2>Actitudes ante el uso de las TIC</h2>
           <span class="avg-badge" id="avg1">Prom: —</span>
         </div>
-        <div class="chart-wrap" id="chart1"></div>
-        <div class="dist-section">
-          <div class="dist-title">Distribución de respuestas (1–5)</div>
-          <div class="dist-bars" id="dist1"></div>
-        </div>
+        <div class="questions-grid" id="chart1"></div>
+        <div class="section-summary" id="sum1"></div>
       </div>
 
       <!-- Sección 2 -->
@@ -149,11 +152,8 @@
           <h2>Nivel de conocimiento de tecnologías</h2>
           <span class="avg-badge" id="avg2">Prom: —</span>
         </div>
-        <div class="chart-wrap" id="chart2"></div>
-        <div class="dist-section">
-          <div class="dist-title">Distribución de respuestas (1–5)</div>
-          <div class="dist-bars" id="dist2"></div>
-        </div>
+        <div class="questions-grid" id="chart2"></div>
+        <div class="section-summary" id="sum2"></div>
       </div>
 
       <!-- Sección 3 -->
@@ -162,11 +162,8 @@
           <h2>Uso de TIC</h2>
           <span class="avg-badge" id="avg3">Prom: —</span>
         </div>
-        <div class="chart-wrap" id="chart3"></div>
-        <div class="dist-section">
-          <div class="dist-title">Distribución de respuestas (1–5)</div>
-          <div class="dist-bars" id="dist3"></div>
-        </div>
+        <div class="questions-grid" id="chart3"></div>
+        <div class="section-summary" id="sum3"></div>
       </div>
 
       <div class="last-updated" id="lastUpdated"></div>
@@ -211,7 +208,21 @@ const QUESTIONS = [
   { num:31, sec:3, short:'Autor y gamificación' },
 ];
 
-const COLORS = ['#e24b4b','#ef9f27','#f0d44a','#5dcaa5','#378add'];
+/* Colores para cada puntuación 1→5 */
+const SCORE_COLORS = {
+  1: '#e24b4b',
+  2: '#ef9f27',
+  3: '#f0d44a',
+  4: '#5dcaa5',
+  5: '#378add'
+};
+const SCORE_LABELS = {
+  1: 'Muy bajo',
+  2: 'Bajo',
+  3: 'Medio',
+  4: 'Alto',
+  5: 'Muy alto'
+};
 
 function doLogin() {
   const pwd = document.getElementById('pwdInput').value;
@@ -238,6 +249,14 @@ function clearData() {
     localStorage.removeItem('tic_responses');
     renderDashboard();
   }
+}
+
+function avgColor(avg) {
+  if (avg >= 4.5) return '#5dcaa5';
+  if (avg >= 3.5) return '#378add';
+  if (avg >= 2.5) return '#f0d44a';
+  if (avg >= 1.5) return '#ef9f27';
+  return '#e24b4b';
 }
 
 async function renderDashboard() {
@@ -268,85 +287,93 @@ async function renderDashboard() {
 
   [1, 2, 3].forEach(sec => {
     const secQs = QUESTIONS.filter(q => q.sec === sec);
-    const avgs = secQs.map(q => {
-      const vals = raw.map(r => r.answers[q.num]).filter(v => v !== undefined);
-      return vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : 0;
-    });
-    const secAvg = avgs.reduce((a, b) => a + b, 0) / avgs.length;
-    grandSum += avgs.reduce((a, b) => a + b, 0);
-    grandCount += avgs.length;
-
-    document.getElementById('avg' + sec).textContent = 'Prom: ' + secAvg.toFixed(2);
-
     const chartEl = document.getElementById('chart' + sec);
+    const sumEl   = document.getElementById('sum' + sec);
     chartEl.innerHTML = '';
-    const maxVal = 5;
 
-    secQs.forEach((q, i) => {
-      const avg = avgs[i];
-      const pct = Math.round((avg / maxVal) * 100);
-      const color = avg >= 4 ? '#5dcaa5' : avg >= 3 ? '#378add' : avg >= 2 ? '#ef9f27' : '#e24b4b';
-      const row = document.createElement('div');
-      row.className = 'bar-row';
-      row.innerHTML = `
-        <div class="bar-label">${q.num}</div>
-        <div class="bar-text" title="${q.short}">${q.short}</div>
-        <div class="bar-track">
-          <div class="bar-fill" style="width:0%;background:${color}" data-w="${pct}">
-            <span>${avg.toFixed(2)}</span>
+    let secSum = 0;
+    // Contadores globales de la sección para el resumen
+    const secCounts = [0,0,0,0,0];
+
+    secQs.forEach(q => {
+      const vals = raw.map(r => r.answers[q.num]).filter(v => v !== undefined && v >= 1 && v <= 5);
+      const avg  = vals.length ? vals.reduce((a,b) => a+b, 0) / vals.length : 0;
+      secSum += avg;
+      grandSum += avg; grandCount++;
+
+      // Contar cuántas personas dieron cada puntuación 1-5
+      const counts = [0,0,0,0,0];
+      vals.forEach(v => { counts[v-1]++; secCounts[v-1]++; });
+      const maxCount = Math.max(...counts, 1);
+
+      // Construir tarjeta de pregunta
+      const card = document.createElement('div');
+      card.className = 'question-card';
+
+      // Cabecera
+      const header = document.createElement('div');
+      header.className = 'q-header';
+      header.innerHTML = `<span class="q-num">P${q.num}</span><span class="q-title">${q.short}</span>`;
+      card.appendChild(header);
+
+      // Promedio grande
+      const avgEl = document.createElement('div');
+      avgEl.className = 'q-avg';
+      avgEl.style.color = avgColor(avg);
+      avgEl.textContent = avg > 0 ? avg.toFixed(2) : '—';
+      card.appendChild(avgEl);
+
+      // Barras de distribución (una barra por puntuación 1-5)
+      const barsWrap = document.createElement('div');
+      barsWrap.className = 'score-bars';
+
+      for (let s = 1; s <= 5; s++) {
+        const cnt = counts[s-1];
+        const pct = Math.round((cnt / maxCount) * 100);
+        const row = document.createElement('div');
+        row.className = 'score-row';
+        row.innerHTML = `
+          <span class="score-lbl">${s}</span>
+          <div class="score-track">
+            <div class="score-fill" style="width:0%;background:${SCORE_COLORS[s]}" data-w="${pct}"></div>
           </div>
-        </div>
-        <div class="bar-score">${pct}%</div>`;
-      chartEl.appendChild(row);
+          <span class="score-count">${cnt}</span>`;
+        barsWrap.appendChild(row);
+      }
+      card.appendChild(barsWrap);
 
-      // Distribucion por pregunta (1-5)
-      const qCounts = [0, 0, 0, 0, 0];
-      raw.forEach(r => {
-        const v = r.answers[q.num];
-        if (v >= 1 && v <= 5) qCounts[v - 1]++;
-      });
-      const qTotal = qCounts.reduce((a, b) => a + b, 0) || 1;
-      const dist = document.createElement('div');
-      dist.className = 'q-dist';
-      const segs = qCounts.map((c, idx) => {
-        const w = Math.round((c / qTotal) * 100);
-        return `<div class="q-dist-seg" style="width:${w}%;background:${COLORS[idx]}" title="${idx + 1}: ${c}"></div>`;
-      }).join('');
-      dist.innerHTML = `
-        <div class="q-dist-label">1-5</div>
-        <div>
-          <div class="q-dist-track">${segs}</div>
-          <div class="q-dist-nums"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
-        </div>`;
-      chartEl.appendChild(dist);
+      // Leyenda de colores (solo en la primera tarjeta de cada sección)
+      if (q === secQs[0]) {
+        const legend = document.createElement('div');
+        legend.className = 'score-legend';
+        for (let s = 1; s <= 5; s++) {
+          legend.innerHTML += `<span class="legend-item"><span class="legend-dot" style="background:${SCORE_COLORS[s]}"></span>${s} — ${SCORE_LABELS[s]}</span>`;
+        }
+        card.appendChild(legend);
+      }
+
+      chartEl.appendChild(card);
     });
 
+    // Animar barras después de insertar en DOM
     setTimeout(() => {
-      chartEl.querySelectorAll('.bar-fill').forEach(el => {
+      chartEl.querySelectorAll('.score-fill').forEach(el => {
         el.style.width = el.dataset.w + '%';
       });
-    }, 100);
+    }, 120);
 
-    const distEl = document.getElementById('dist' + sec);
-    distEl.innerHTML = '';
-    const counts = [0, 0, 0, 0, 0];
-    secQs.forEach(q => {
-      raw.forEach(r => {
-        const v = r.answers[q.num];
-        if (v >= 1 && v <= 5) counts[v - 1]++;
-      });
-    });
-    const maxC = Math.max(...counts, 1);
-    counts.forEach((c, i) => {
-      const h = Math.round((c / maxC) * 52);
-      const col = document.createElement('div');
-      col.className = 'dist-col';
-      col.innerHTML = `
-        <div class="dist-val">${c}</div>
-        <div class="dist-bar" style="height:${h}px;background:${COLORS[i]}"></div>
-        <div class="dist-lbl">${i + 1}</div>`;
-      distEl.appendChild(col);
-    });
+    // Promedio de sección
+    const secAvg = secSum / secQs.length;
+    document.getElementById('avg' + sec).textContent = 'Prom: ' + secAvg.toFixed(2);
+
+    // Resumen de distribución global de la sección
+    const totalRespSec = secCounts.reduce((a,b) => a+b, 0) || 1;
+    sumEl.innerHTML = secCounts.map((c,i) => `
+      <div class="sum-item">
+        <span class="legend-dot" style="display:inline-block;width:8px;height:8px;border-radius:2px;background:${SCORE_COLORS[i+1]};vertical-align:middle;margin-right:4px;"></span>
+        <span class="sum-label">${i+1} — ${SCORE_LABELS[i+1]}:</span>
+        <span class="sum-val">${c} resp. (${Math.round(c/totalRespSec*100)}%)</span>
+      </div>`).join('');
   });
 
   const overall = grandSum / grandCount;
