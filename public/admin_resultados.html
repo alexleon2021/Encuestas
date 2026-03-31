@@ -65,6 +65,14 @@
   .bar-fill span { font-size: 0.72rem; font-weight: 700; color: rgba(255,255,255,0.9); white-space: nowrap; }
   .bar-score { font-size: 0.78rem; font-weight: 700; width: 36px; text-align: right; color: #c8d8e8; }
 
+  .q-dist { display: grid; grid-template-columns: 28px 1fr; gap: 10px; margin: 6px 0 14px; align-items: center; }
+  .q-dist-label { font-size: 0.7rem; color: #4a6080; text-align: right; }
+  .q-dist-track { display: flex; height: 12px; background: #0f1923; border-radius: 6px; overflow: hidden; border: 1px solid #1f2a3a; }
+  .q-dist-seg { height: 100%; }
+  .q-dist-legend { display: flex; gap: 8px; font-size: 0.65rem; color: #6f8299; margin-top: 4px; }
+  .q-dist-legend span { display: inline-flex; align-items: center; gap: 4px; }
+  .q-dist-dot { width: 8px; height: 8px; border-radius: 2px; display: inline-block; }
+
   .dist-section { padding: 1rem 1.5rem; border-top: 1px solid #2a3a52; }
   .dist-title { font-size: 0.78rem; color: #7a90a8; margin-bottom: 8px; }
   .dist-bars { display: flex; gap: 6px; align-items: flex-end; height: 60px; }
@@ -292,6 +300,33 @@ async function renderDashboard() {
         </div>
         <div class="bar-score">${pct}%</div>`;
       chartEl.appendChild(row);
+
+      // Distribucion por pregunta (1-5)
+      const qCounts = [0, 0, 0, 0, 0];
+      raw.forEach(r => {
+        const v = r.answers[q.num];
+        if (v >= 1 && v <= 5) qCounts[v - 1]++;
+      });
+      const qTotal = qCounts.reduce((a, b) => a + b, 0) || 1;
+      const dist = document.createElement('div');
+      dist.className = 'q-dist';
+      const segs = qCounts.map((c, idx) => {
+        const w = Math.round((c / qTotal) * 100);
+        return `<div class="q-dist-seg" style="width:${w}%;background:${COLORS[idx]}" title="${idx + 1}: ${c}"></div>`;
+      }).join('');
+      dist.innerHTML = `
+        <div class="q-dist-label">1-5</div>
+        <div>
+          <div class="q-dist-track">${segs}</div>
+          <div class="q-dist-legend">
+            <span><i class="q-dist-dot" style="background:${COLORS[0]}"></i>1</span>
+            <span><i class="q-dist-dot" style="background:${COLORS[1]}"></i>2</span>
+            <span><i class="q-dist-dot" style="background:${COLORS[2]}"></i>3</span>
+            <span><i class="q-dist-dot" style="background:${COLORS[3]}"></i>4</span>
+            <span><i class="q-dist-dot" style="background:${COLORS[4]}"></i>5</span>
+          </div>
+        </div>`;
+      chartEl.appendChild(dist);
     });
 
     setTimeout(() => {
